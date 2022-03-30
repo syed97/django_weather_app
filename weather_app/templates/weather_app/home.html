@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .gradient-custom {
+        /* fallback for old browsers */
+        background: #ffffff;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 236, 210, 1));
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, rgb(117, 172, 255), rgb(34, 123, 255))
+        }
+    </style>
+</head>
+
+<body>
+    <div class="jumbotron bg-primary rounded-0 text-white py-5">
+        <h1 class="display-4 text-center">How's the weather?</h1>
+        <p class="lead text-center">
+        Select a city to view its weather stats
+        </p>
+    </div>
+  
+
+    <div class="container">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="row d-flex justify-content-center py-3">
+                <div class="col-auto">
+                    {{add_city_form.name}}
+                </div>
+                <div class="col-auto">
+                    <input type="submit" name="add_form" value="Add City" class="btn btn-primary btn-sm">
+                </div>
+                <div class="col-auto">
+                    <input type="submit" name="del_form" value="Delete City" class="btn btn-danger btn-sm">
+                </div>
+            </div>
+        </form>
+        
+        <div class="row d-flex justify-content-center align-items-center">
+            {% for city_weather in weather_data %}
+            <!-- main card container -->
+            <div class="col-md-3 py-3 px-3 my-5 mx-5 border-0 rounded gradient-custom">
+                <!-- initial card row -->
+                <div class="row d-flex">
+                    <div class="col-md-3">
+                        <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png"
+                        alt="weather icon"
+                        class="rounded">
+                    </div>
+                    <div class="col-md-9">
+                        <h2>{{city_weather.city}}</h2>
+                    </div>
+                </div>
+                <!-- second card row -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8 d-flex justify-content-center">
+                        <h3>{{city_weather.temperature}} °C</h3>
+                    </div>
+                </div>
+                <!-- third card row -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 text-center border-bottom border-primary">
+                        <h5>{{city_weather.description}}</h5>
+                    </div>
+                </div>
+                <!-- fourth card row -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-4">
+                        <p>Feels like: </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{city_weather.feels_like}} °C</p>
+                    </div>
+                </div>
+                <!-- fifth card row -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-4">
+                        <p>Humidity: </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{city_weather.humidity}} %</p>
+                    </div>
+                </div>
+                <!-- sixth card row -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-5">
+                        <p>Wind Speed: </p>
+                    </div>
+                    <div class="col-md-7">
+                        <p>{{city_weather.wind_speed}} m/s</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+
+</html>
